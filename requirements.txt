@@ -1,5 +1,5 @@
 fastapi
-scikit-learn==1.6.1  # Version used for training
 uvicorn
+scikit-learn==1.6.1  # Use same version you used during training
 joblib
-
+jinja2
