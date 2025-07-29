@@ -1,27 +1,21 @@
-# app.py
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+import joblib
 
-from fastapi import FastAPI, Request
-from classification_pipeline import SklearnClassifier
-
-# Load the model
-model = SklearnClassifier("text_rf_pipeline.pkl")
-
-# Initialize FastAPI app
 app = FastAPI()
 
-@app.post("/predict/")
-async def predict(request: Request):
-    payload = await request.json()
-    query = payload.get("text", "")
-    
-    if not query:
-        return {"error": "No 'text' provided"}
+templates = Jinja2Templates(directory="templates")
+model = joblib.load("text_rf_pipeline.pkl")
 
-    result, _ = model.run(query=query)
-    doc = result["documents"][0]
+@app.get("/", response_class=HTMLResponse)
+def read_form(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
-    return {
-        "label": doc["meta"].get("predicted_label", "N/A"),
-        "probability": doc["meta"].get("probability", 0.0)
-    }
-
+@app.post("/predict/", response_class=HTMLResponse)
+def predict(request: Request, text: str = Form(...)):
+    prediction = model.predict([text])[0]
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "result": prediction
+    })
