@@ -10,12 +10,13 @@ model = joblib.load("text_rf_pipeline.pkl")
 
 @app.get("/", response_class=HTMLResponse)
 def read_form(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request, "result": None})
 
 @app.post("/predict/", response_class=HTMLResponse)
 def predict(request: Request, text: str = Form(...)):
     prediction = model.predict([text])[0]
     return templates.TemplateResponse("index.html", {
         "request": request,
-        "result": prediction
+        "result": prediction,
+        "user_input": text
     })
