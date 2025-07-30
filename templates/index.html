@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Gold AI</title>
+    <title>Gold AI</title>
 </head>
 <body>
-  <h1>Gold AI</h1>
-  <form action="/predict/" method="post">
-    <textarea name="text" rows="6" cols="60" placeholder="Enter your text here..."></textarea><br><br>
-    <button type="submit">Chat</button>
-  </form>
+    <h1>Gold AI Chat</h1>
+    <form action="/predict/" method="post">
+        <textarea name="text" rows="4" cols="50" placeholder="Type your message..."></textarea><br><br>
+        <button type="submit">Chat</button>
+    </form>
 
-  {% if result %}
-    <h2>Prediction:</h2>
-    <p>{{ result }}</p>
-  {% endif %}
+    {% if result %}
+        <h2>Prediction Result</h2>
+        <p><strong>Your Input:</strong> {{ user_input }}</p>
+        <p><strong>Prediction:</strong> {{ result }}</p>
+    {% endif %}
 </body>
 </html>
