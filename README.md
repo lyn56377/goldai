@@ -1,2 +1,2 @@
 # goldai
-are for gold mining
+ai for gold mining
