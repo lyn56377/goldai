@@ -3,3 +3,4 @@ uvicorn
 scikit-learn==1.6.1  # Use same version you used during training
 joblib
 jinja2
+python-multipart
